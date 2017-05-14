@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class LEDEncryption : MonoBehaviour
 {
@@ -136,5 +138,29 @@ public class LEDEncryption : MonoBehaviour
                 GetComponent<KMBombModule>().HandleStrike();
             }
         }
+    }
+
+    KMSelectable[] ProcessTwitchCommand(string command)
+    {
+        var commandList = command.ToLowerInvariant().Split(new[] {" "}, StringSplitOptions.RemoveEmptyEntries);
+        var buttonLookup = new Dictionary<string, int>
+        {
+            {"topleft", 0}, {"lefttop", 0}, {"tl", 0}, {"lt", 0}, {"0", 0},
+            {buttons[0].GetComponentInChildren<TextMesh>().text.ToLowerInvariant(), 0},
+
+            {"topright", 1}, {"righttop", 1}, {"tr", 1}, {"rt", 1}, {"1", 1},
+            {buttons[1].GetComponentInChildren<TextMesh>().text.ToLowerInvariant(), 1},
+
+            {"bottomleft", 2}, {"leftbottom", 2}, {"bl", 2}, {"lb", 2}, {"2", 2},
+            {buttons[2].GetComponentInChildren<TextMesh>().text.ToLowerInvariant(), 2},
+
+            {"bottomright", 3}, {"rightbottom", 3}, {"br", 3}, {"rb", 3}, {"3", 3},
+            {buttons[3].GetComponentInChildren<TextMesh>().text.ToLowerInvariant(), 3},
+        };
+        if (commandList[0] != "press" || commandList.Length != 2 || !buttonLookup.ContainsKey(commandList[1]))
+            return null;
+
+        return new[] {buttons[buttonLookup[commandList[1]]]};
+
     }
 }
