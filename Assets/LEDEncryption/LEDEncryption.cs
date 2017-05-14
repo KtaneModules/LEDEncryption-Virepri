@@ -119,6 +119,11 @@ public class LEDEncryption : MonoBehaviour
         }
         else
         {
+            //Do nothing more once module is solved.
+            //If you wish for strikes to be caused on the incorrect buttons, move this to inside of the
+            //if (isCorrect) block before the layer++ line.
+            if (layer.Equals(layerMultipliers.Length)) return;
+
             Debug.LogFormat("[LED Encryption #{0}] Pressed {1} button, which is {2}.", moduleId, buttonName, isCorrect ? "correct" : "wrong");
             if (isCorrect)
             {
