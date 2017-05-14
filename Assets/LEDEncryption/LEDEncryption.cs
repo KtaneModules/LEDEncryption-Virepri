@@ -1,112 +1,129 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Text;
+﻿using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 
-public class LEDEncryption : MonoBehaviour {
-
+public class LEDEncryption : MonoBehaviour
+{
     public TextMesh LayerText;
-    int layer = -1;
-
     public KMSelectable[] buttons;
     public GameObject[] LEDs;
-    int[] LEDDat;
     public Material[] mats;
     public Material off;
 
-    int correctIndex;
+    int layer = 0;
+    int[] layerMultipliers;
     bool isActivated = false;
 
-    string letters = "abcdefghijklmnopqrstuvwxyz";
-    string layerletters = "";
+    int moduleId;
+    static int moduleIdCounter = 1;
+
+    static string[] buttonNames = { "top-left", "top-right", "bottom-left", "bottom-right" };
 
     // Use this for initialization
-    void Start() {
+    void Start()
+    {
+        moduleId = moduleIdCounter++;
+
         for (int i = 0; i < LEDs.Length; i++)
         {
             LEDs[i].GetComponent<MeshRenderer>().material = off;
         }
 
-        LEDDat = new int[Random.Range(2,6)];
+        layerMultipliers = new int[Random.Range(2, 6)];
 
-        for(int i = 0; i < LEDDat.Length; i++)
+        for (int i = 0; i < layerMultipliers.Length; i++)
         {
             LEDs[i].SetActive(true);
-            LEDDat[i] = Random.Range(2,8);
+            layerMultipliers[i] = Random.Range(2, 8);
         }
 
         LoadLayer();
         GetComponent<KMBombModule>().OnActivate += ActivateModule;
-	}
+    }
 
     void ActivateModule()
     {
         isActivated = true;
-        for(int i = 0; i < LEDDat.Length;i++)
+        for (int i = 0; i < layerMultipliers.Length; i++)
         {
-            LEDs[i].GetComponent<MeshRenderer>().material = mats[LEDDat[i] - 2];
+            LEDs[i].GetComponent<MeshRenderer>().material = mats[layerMultipliers[i] - 2];
         }
+    }
+
+    static List<T> Shuffle<T>(List<T> list)
+    {
+        for (int j = list.Count; j >= 1; j--)
+        {
+            int item = Random.Range(0, j);
+            if (item < j - 1)
+            {
+                var t = list[item];
+                list[item] = list[j - 1];
+                list[j - 1] = t;
+            }
+        }
+        return list;
     }
 
     void LoadLayer()
     {
-        layer++;
         LayerText.text = (layer + 1).ToString();
-        correctIndex = Random.Range(0, 4);
-        layerletters = "";
-        for(int i = 0;i < 4; i++)
-        {
-            string t = letters[Random.Range(0,letters.Length-1)].ToString();
-            while (layerletters.IndexOf(t) != -1)
-            {
-                t = letters[Random.Range(0, letters.Length - 1)].ToString();
-            }
-            layerletters += t;
-        }
 
-        StringBuilder tsb = new StringBuilder(layerletters);
-        int ol = (letters.IndexOf(tsb.ToString()[correctIndex]) * LEDDat[layer]) % (letters.Length);
-        while(tsb.ToString().Contains(letters[ol].ToString())) {
-            string t = letters[Random.Range(0, letters.Length - 1)].ToString();
-            while (tsb.ToString().IndexOf(t) != -1)
-            {
-                t = letters[Random.Range(0, letters.Length - 1)].ToString();
-            }
-            tsb[correctIndex] = t[0];
-            ol = (letters.IndexOf(tsb.ToString()[correctIndex]) * LEDDat[layer]) % (letters.Length);
-        }
-        tsb[3 - correctIndex] = letters[ol];
-        layerletters = tsb.ToString();
+        // Choose which button will have the correct answer.
+        var correctIndex = Random.Range(0, 4);
+        var layerLetters = new int[4];
 
-        for(int i = 0;i < buttons.Length;i++)
-        {
-            buttons[i].GetComponentInChildren<TextMesh>().text = layerletters[i].ToString();
-        }
+        retry:
+        // Take all 26 letters of the alphabet (represented by the numbers 0–25) in random order.
+        var letters = Shuffle(Enumerable.Range(0, 26).ToList());
+
+        // Choose a random letter to display on the correct button.
+        layerLetters[correctIndex] = letters[0];
+        letters.RemoveAt(0);
+
+        // Find out which letter needs to be diagonally opposite for this to be the correct answer.
+        layerLetters[3 - correctIndex] = (layerLetters[correctIndex] * layerMultipliers[layer]) % 26;
+        letters.Remove(layerLetters[3 - correctIndex]);
+
+        // If that’s the same letter, try again.
+        if (layerLetters[3 - correctIndex] == layerLetters[correctIndex])
+            goto retry;
+
+        // Put random letters on the other two buttons (these are necessarily different because we removed the other two from the list)
+        layerLetters[correctIndex ^ 1] = letters[0];
+        layerLetters[(3 - correctIndex) ^ 1] = letters[1];
 
         for (int i = 0; i < buttons.Length; i++)
         {
-            int reallylocal = i;
-            int tl = (letters.IndexOf(layerletters[reallylocal]) * LEDDat[layer]) % (letters.Length);
-            buttons[i].OnInteract = delegate () { OnPress(letters[tl].Equals(layerletters[3 - reallylocal]),reallylocal); return true; };
+            buttons[i].GetComponentInChildren<TextMesh>().text = ((char) ('A' + layerLetters[i])).ToString();
+            var isCorrect = (layerLetters[i] * layerMultipliers[layer]) % 26 == layerLetters[3 - i];
+            var buttonName = buttonNames[i];
+            buttons[i].OnInteract = delegate () { OnPress(isCorrect, buttonName); return false; };
         }
+
+        Debug.LogFormat("[LED Encryption #{0}] Letters in layer {1} ({2}) are: {3}", moduleId, layer + 1, new[] { "red", "green", "blue", "yellow", "purple", "orange" }[layerMultipliers[layer] - 2], string.Join("", layerLetters.Select(ch => ((char) ('A' + ch)).ToString()).ToArray()));
+        Debug.LogFormat("[LED Encryption #{0}] Correct button: {1}", moduleId, buttonNames[correctIndex]);
     }
 
-    void OnPress(bool correctButton, int i)
+    void OnPress(bool isCorrect, string buttonName)
     {
         GetComponent<KMAudio>().PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.ButtonPress, transform);
         GetComponent<KMSelectable>().AddInteractionPunch();
 
-        if(!isActivated)
+        if (!isActivated)
         {
-            Debug.Log("Pressed button before it's been activated");
+            Debug.LogFormat("[LED Encryption #{0}] Pressed button before module activated.", moduleId);
             GetComponent<KMBombModule>().HandleStrike();
         }
         else
         {
-            Debug.Log("Pressed " + correctButton + " button, correctIndex: " + correctIndex.ToString() + " button index: " + i.ToString());
-            if (correctButton)
+            Debug.LogFormat("[LED Encryption #{0}] Pressed {1} button, which is {2}.", moduleId, buttonName, isCorrect ? "correct" : "wrong");
+            if (isCorrect)
             {
-                if (layer.Equals(LEDDat.Length-1))
+                layer++;
+                if (layer.Equals(layerMultipliers.Length))
                 {
+                    Debug.LogFormat("[LED Encryption #{0}] Module solved.", moduleId);
                     GetComponent<KMBombModule>().HandlePass();
                 }
                 else

@@ -886,8 +886,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000012879097792}
   m_LocalRotation: {x: -0.000000115202326, y: 0.7071067, z: -0.7071068, w: -0.000000115202305}
-  m_LocalPosition: {x: -0.01805842, y: 0.0215, z: 0.059052534}
-  m_LocalScale: {x: 0.01, y: 0.009999998, z: 0.009999998}
+  m_LocalPosition: {x: -0.01805842, y: 0.0215, z: 0.05305253}
+  m_LocalScale: {x: 0.0035, y: 0.0035, z: 0.0035}
   m_LocalEulerAnglesHint: {x: 89.980194, y: -180, z: 0}
   m_Children: []
   m_Father: {fileID: 4000013067921748}
@@ -1128,8 +1128,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000012550445218}
   m_LocalRotation: {x: -0.000000115202326, y: 0.7071067, z: -0.7071068, w: -0.000000115202305}
-  m_LocalPosition: {x: 0.04834008, y: 0.0215, z: 0.059052534}
-  m_LocalScale: {x: 0.01, y: 0.009999998, z: 0.009999998}
+  m_LocalPosition: {x: 0.04834008, y: 0.0215, z: 0.05305253}
+  m_LocalScale: {x: 0.0035, y: 0.0035, z: 0.0035}
   m_LocalEulerAnglesHint: {x: 89.980194, y: -180, z: 0}
   m_Children: []
   m_Father: {fileID: 4000010110795478}
@@ -1169,10 +1169,10 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000012195576718}
-  m_LocalRotation: {x: -0.000000115202326, y: 0.7071067, z: -0.7071068, w: -0.000000115202305}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0.7071068, w: 0}
   m_LocalPosition: {x: -0, y: 0.015, z: 0}
-  m_LocalScale: {x: 0.020479213, y: 0.020479199, z: 0.020479199}
-  m_LocalEulerAnglesHint: {x: 89.980194, y: -180, z: 0}
+  m_LocalScale: {x: 0.007, y: 0.007, z: 0.007}
+  m_LocalEulerAnglesHint: {x: 90, y: -180, z: 0}
   m_Children: []
   m_Father: {fileID: 4000011469562068}
   m_RootOrder: 0
@@ -1182,10 +1182,10 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000010887079296}
-  m_LocalRotation: {x: -0.000000115202326, y: 0.7071067, z: -0.7071068, w: -0.000000115202305}
-  m_LocalPosition: {x: 0.04834008, y: 0.0215, z: -0.00457344}
-  m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
-  m_LocalEulerAnglesHint: {x: 89.980194, y: -180, z: 0}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0.7071068, w: 0}
+  m_LocalPosition: {x: 0.04834008, y: 0.0215, z: -0.01057344}
+  m_LocalScale: {x: 0.0035, y: 0.0035, z: 0.0035}
+  m_LocalEulerAnglesHint: {x: 90, y: -180, z: 0}
   m_Children: []
   m_Father: {fileID: 4000012279418884}
   m_RootOrder: 2
@@ -1383,8 +1383,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000010930438064}
   m_LocalRotation: {x: -0.000000115202326, y: 0.7071067, z: -0.7071068, w: -0.000000115202305}
-  m_LocalPosition: {x: -0.01805842, y: 0.0215, z: -0.00457344}
-  m_LocalScale: {x: 0.01, y: 0.009999998, z: 0.009999998}
+  m_LocalPosition: {x: -0.01805842, y: 0.0215, z: -0.01057344}
+  m_LocalScale: {x: 0.0035, y: 0.0035, z: 0.0035}
   m_LocalEulerAnglesHint: {x: 89.980194, y: -180, z: 0}
   m_Children: []
   m_Father: {fileID: 4000010831817206}
@@ -2625,7 +2625,7 @@ TextMesh:
   m_Anchor: 4
   m_Alignment: 1
   m_TabSize: 4
-  m_FontSize: 40
+  m_FontSize: 84
   m_FontStyle: 0
   m_RichText: 1
   m_Font: {fileID: 12800000, guid: 1ebe1d96973a920409b439b3a0e2bb63, type: 3}
@@ -2646,7 +2646,7 @@ TextMesh:
   m_Anchor: 4
   m_Alignment: 1
   m_TabSize: 4
-  m_FontSize: 40
+  m_FontSize: 128
   m_FontStyle: 0
   m_RichText: 1
   m_Font: {fileID: 12800000, guid: 1ebe1d96973a920409b439b3a0e2bb63, type: 3}
@@ -2667,7 +2667,7 @@ TextMesh:
   m_Anchor: 4
   m_Alignment: 1
   m_TabSize: 4
-  m_FontSize: 40
+  m_FontSize: 128
   m_FontStyle: 0
   m_RichText: 1
   m_Font: {fileID: 12800000, guid: 1ebe1d96973a920409b439b3a0e2bb63, type: 3}
@@ -2688,7 +2688,7 @@ TextMesh:
   m_Anchor: 4
   m_Alignment: 1
   m_TabSize: 4
-  m_FontSize: 40
+  m_FontSize: 128
   m_FontStyle: 0
   m_RichText: 1
   m_Font: {fileID: 12800000, guid: 1ebe1d96973a920409b439b3a0e2bb63, type: 3}
@@ -2709,7 +2709,7 @@ TextMesh:
   m_Anchor: 4
   m_Alignment: 1
   m_TabSize: 4
-  m_FontSize: 40
+  m_FontSize: 128
   m_FontStyle: 0
   m_RichText: 1
   m_Font: {fileID: 12800000, guid: 1ebe1d96973a920409b439b3a0e2bb63, type: 3}
