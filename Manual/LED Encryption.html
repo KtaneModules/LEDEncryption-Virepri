@@ -1,73 +1,60 @@
 <!DOCTYPE html>
-<html class="no-js"><!--<![endif]--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    
+<html class="no-js">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Keep Talking and Nobody Explodes LED Encryption Manual</title>
-    <meta name="viewport" content="initial-scale=1"> 
+    <title>LED Encryption — Keep Talking and Nobody Explodes Module</title>
+    <meta name="viewport" content="initial-scale=1">
 	<link href='https://fonts.googleapis.com/css?family=Special+Elite' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="css/normalize.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
+    <style>
+        li { margin: .5em 0; }
+    </style>
 </head>
 <body>
 <div class="section">
     <div class="page page-bg-01">
-        		<div class="page-header">
-			<span class="page-header-doc-title">Keep Talking and Nobody Explodes Mod</span>
-			<span class="page-header-section-title">LED Encryption</span>
-		</div>
+        <div class="page-header">
+            <span class="page-header-doc-title">Keep Talking and Nobody Explodes Mod</span>
+            <span class="page-header-section-title">LED Encryption</span>
+        </div>
         <div class="page-content">
-    	    <img src="img/LED_Encryption.svg" class="diagram">
+            <img src="img/Component/LED Encryption.svg" class="diagram">
             <h2>On the Subject of LED Encryption</h2>
             <p class="flavour-text">
-					Ooooh, Shiny lights and buttons. 
-                    Touchy touchy!
-			</p>
+                Ooooh, shiny lights and buttons.
+                Touchy touchy!
+            </p>
 
-			<ul>
-                <li>Two to five LEDs are installed at the top of the module.</li>
-                <li>Four buttons of letters are shown (all of which are different characters)</li>
-                <li>there may be more than one answer per layer. Any are correct.</li>
+            <ul>
+                <li>Two to five LEDs are installed at the top of the module, representing stages. To disarm the module, these stages must be solved in order.</li>
+                <li>Four buttons with four different letters are shown. The letters change at each stage.</li>
+                <li>The current stage is indicated by a number in the top left of the module.</li>
+                <li>The current stage’s multiplier is indicated by that stage’s LED according to the following table:
+                    <table>
+                        <tr>
+                            <td>Red</td>
+                            <td>Green</td>
+                            <td>Blue</td>
+                            <td>Yellow</td>
+                            <td>Purple</td>
+                            <td>Orange</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>3</td>
+                            <td>4</td>
+                            <td>5</td>
+                            <td>6</td>
+                            <td>7</td>
+                        </tr>
+                    </table>
+                </li>
+                <li>Assign each letter of the alphabet to the numbers 0–25 (A = 0, B = 1, C = 2, etc.).</li>
+                <li>A button is correct if its letter value, multiplied by the current stage’s multiplier, modulo 26, is equal to the value of the letter on its diagonally opposite button.</li>
+                <li>At each stage, press a correct button. There may be more than one possible answer.</li>
             </ul>
-            
-            <p>To disarm the LED Encryption module, you'll need to assign each letter of the alphabet to a number, 0-25 respectively (A = 0, B = 1, C = 2). Each LED indicates a value to multiply by.</p>
-            
-            <table>
-                <tr>
-                    <td>Red</td>
-                    <td>Green</td>
-                    <td>Blue</td>
-                    <td>Yellow</td>
-                    <td>Purple</td>
-                    <td>Orange</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>3</td>
-                    <td>4</td>
-                    <td>5</td>
-                    <td>6</td>
-                    <td>7</td>
-                </tr>
-            </table>
-            
-            <p>The responding LED is the number of the layer you are on (from left to right). The layer number is indicated next to these LEDs.</p>
-            <p>With each letter having a number (0-25), choose one corner, multiply it by the LED's respective value, and if the opposite diagonal character is the same as the answer, smash that button.</p>
-            <p>Here is an example solution.</p>
-            
-            <table>
-                <tr>
-                    <td>Blue Green Yellow Orange 3</td>
-                </tr>
-                <tr>
-                    <td>e</td>
-                    <td>d</td>
-                </tr>
-                <tr>
-                    <td>b</td>
-                    <td>u</td>
-                </tr>
-            </table>
-            <p>You'd hit E because E (4) * 5 = 20 (u)</p>
         </div>
     </div>
 </div>
